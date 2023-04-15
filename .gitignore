@@ -130,5 +130,13 @@ dmypy.json
 
 #Non ready folders
 Notebooks/Simple Similarity/
-Notebooks/Deep Learning similarity/
 Notebooks/Dataset Making/bin
+
+
+#Ignoring logs
+Notebooks/Deep Learning similarity/Regression Siamese/logs_lstm/
+Notebooks/Deep Learning similarity/Regression Siamese/logs_lstm1d/
+Notebooks/Deep Learning similarity/Regression Siamese/logs_gru/
+Notebooks/Deep Learning similarity/Regression Siamese/logs_gru1d/
+Notebooks/Deep Learning similarity/Regression Siamese/
+Notebooks/Deep Learning similarity/Classifiction Siamese Manhattan/logs/
