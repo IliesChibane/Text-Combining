@@ -130,7 +130,10 @@ dmypy.json
 
 #Non ready folders
 Notebooks/Simple Similarity/
-Notebooks/Dataset Making/bin
+Notebooks/Dataset Making/bin/
+Notebooks/Dataset Making/ngrams/
+Notebooks/Dataset Making/EdenAI/
+
 
 
 #Ignoring logs
