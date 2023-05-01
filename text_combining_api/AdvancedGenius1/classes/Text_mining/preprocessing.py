@@ -26,5 +26,3 @@ def split_preprocess(sentences):
     for sentence in sentences:
         s.append(sentence[0].split())
     return s
-
-

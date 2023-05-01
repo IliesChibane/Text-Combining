@@ -1,7 +1,6 @@
 import spacy
 import pandas as pd
 import numpy as np
-import sys
 
 from ..MLM.MLM import init_distilbert
 
