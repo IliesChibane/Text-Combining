@@ -128,7 +128,6 @@ def common_and_uncommon_extraction(sentences):
                     if l == 1: # if the index point to the second string, it means we are dealing with the first string so we add the sequence to the final list 
                         uncommon_str_i[0].append(sub_uncommon if len(sub_uncommon) > 1 else sub_uncommon[0])
                     else: # else it means that we are dealing with the common sentence 
-                        # print(sub_uncommon)
                         if '#' not in sub_uncommon: # if the sequence doesn't contain the # character, it means it is a new sequence so we add it to the final list directly
                             sub_uncommon.reverse()
                             # we add the uncommon substring to all the uncommon parts of all the previous strings
@@ -145,7 +144,6 @@ def common_and_uncommon_extraction(sentences):
                                     # we get the last uncommon substring of the previous string
                                     updated_uncommon_str = uncommon_str_i[k][len(sub_uncommon_str_i_temp) - uwu]
                                     if type(updated_uncommon_str) == list: # if the last uncommon substring is a list, it means that it is a sequence so we need to update it
-                                        # print("updated_uncommon_str : "+str(updated_uncommon_str))
                                         owo = len(updated_uncommon_str) - 1
                                         while owo >= 0: # we loop through the sequence and replace the # character with the uncommon substring
                                             if '#' in sub_uncommon_copy:
@@ -156,7 +154,6 @@ def common_and_uncommon_extraction(sentences):
                                         ind = sub_uncommon_copy.index("#")
                                         sub_uncommon_copy[ind] = updated_uncommon_str
                                     uwu -= 1
-                                    # print("sub_uncommon_copy : "+str(sub_uncommon_copy))
                                 if "#" in sub_uncommon_copy:
                                     sub_uncommon_copy = remove_all(sub_uncommon_copy, '#') # we remove all the # characters that are left
                                 sub_uncommon_str_temp[k].append(sub_uncommon_copy if len(sub_uncommon) > 1 else sub_uncommon_copy[0]) # we add the updated uncommon substring to the final list                   
@@ -225,8 +222,8 @@ def common_and_uncommon_extraction(sentences):
         temp_sentence = shrink(" ".join(temp_sentence))
 
         # update the distribution of the uncommon parts based on the N-gram distribution
-        for i in range(len(uncommon_str_i[0]) - 1, 0, -1):
-            mask = "$ " * len(uncommon_str_i[0][i])
+        for i in range(len(uncommon_str_i[0]), 0, -1):
+            mask = "$ " * len(uncommon_str_i[0][i-1])
             temp_sentence = temp_sentence.replace("#", mask, 1)
         temp_sentence = temp_sentence.replace("$", "#")
         temp_sentence = temp_sentence.split(" ")
@@ -242,4 +239,4 @@ def common_and_uncommon_extraction(sentences):
         uncommon_str_i[i].reverse()
 
     # return the common sentence and the lists of uncommon substrings
-    return common_sentence, flatten(uncommon_str_i)
+    return common_sentence, uncommon_str_i
