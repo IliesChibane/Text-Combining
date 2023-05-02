@@ -51,8 +51,10 @@ def ngram_distribution(uncommon_str_i, common_sentence):
         for i in range(len(uncommon_str)):
             # Make a copy of the current list of the current uncommon part for string 1
             unc_str = uncommon_str[i].copy() if type(uncommon_str[i]) == list else [uncommon_str[i]]
+            og_sentence = get_og_sentence_vector(uncommon_str, common_sentence)
+            temp_uncommon = uncommon_str[i].copy() if type(uncommon_str[i]) == list else [uncommon_str[i]]
             while len(unc_str) > lens[i]:
-                og_sentence = get_og_sentence_vector(uncommon_str, common_sentence)
+                
                 bigram_measures = BigramAssocMeasures()
 
                 # Variable containing the common words that won't allowed in the bigrams
@@ -64,7 +66,7 @@ def ngram_distribution(uncommon_str_i, common_sentence):
                 # Use the bigram collocation finder to get the best bigrams for the sentence
                 finder_str = BigramCollocationFinder.from_words(og_sentence)
                 best_bigrams_str = finder_str.nbest(bigram_measures.pmi, len(n_grams_str))
-
+                
                 # Filter out bigrams that contain common words from the current list of uncommon words
                 best_uncommon_ngrams_str = [ngram for ngram in best_bigrams_str if (not any(p_ngrams in ngram for p_ngrams in common_words_str))]
                 
@@ -89,6 +91,7 @@ def ngram_distribution(uncommon_str_i, common_sentence):
                             uncommon_ngrams_str[j] = unc_str[j] # we add the uncommon words left to the final list
                 uncommon_ngrams_str = remove_all(uncommon_ngrams_str, '') # we remove the empty strings from the final list
                 unc_str = uncommon_ngrams_str.copy() # we update the current list of uncommon words
+                og_sentence = unc_str.copy() # we update the current list of uncommon words
             
             final_uncommon_str_i[nb_unc_str].append(unc_str) # we add the final list of uncommon n-grams to the final list of lists
         nb_unc_str += 1 # we increment the number of uncommon parts
