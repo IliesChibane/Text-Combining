@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+
+  mongodb:
+    image: mongo
+    container_name: mongo
+    restart: always
+    environment: 
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=root
+      - MONGO_INITDB_DATABASE=EdenAI
+      - MONGO_INITDB_USERNAME=root
+      - MONGO_INITDB_PASSWORD=root
+    ports:
+      - 27017:27017
+
+  app:
+    build: .
+    image: app:latest
+    container_name: app
+    restart: always
+    command: python manage.py runserver 
+    volumes:
+      - .:/django_mongodb_docker
+    ports:
+      - 8000:8000
+
+  migration:
+    build: .
+    image: app
+    command: python manage.py migrate
+    volumes:
+      - .:/django_mongodb_docker
+    links:
+      - mongodb
+    depends_on:
+      - make_migrations
+
+  make_migrations:
+    build: .
+    image: app
+    command: python manage.py makemigrations
+    volumes:
+      - .:/django_mongodb_docker
+    links:
+      - mongodb
+    depends_on:
+      - mongodb
