@@ -67,7 +67,7 @@ def common_and_uncommon_extraction(sentences):
         L = init_matrix(temp_sentence, sentences, lens[l], l)
 
         # calculate the index based on the length of the longer string
-        index = max(len(temp_sentence), lens[l])
+        index = len(temp_sentence) + lens[l]
 
         # initialize the common list with empty strings
         common = [""] * (index + 1)
@@ -90,6 +90,7 @@ def common_and_uncommon_extraction(sentences):
 
         # loop through the L matrix to find the common and uncommon substrings
         while i > 0 and j > 0:
+            
             # if the characters match, add the character to the common list and move to the previous diagonal cell
             dist = abs(i - j)
             if temp_sentence[i - 1] == sentences[l][j - 1] and dist <= limit:
@@ -108,12 +109,17 @@ def common_and_uncommon_extraction(sentences):
                 else: # if the tracker is not equal to the current index, it means that the substring is part of a different sequence
                     sub_uncommon_str.reverse() 
                     # add the sequence to the final list
-                    uncommon_str_i[l].append(sub_uncommon_str if len(sub_uncommon_str) > 1 else sub_uncommon_str[0])
+                    none_index = get_last(uncommon_str_i[l], "")
+                    if none_index != -1:
+                        uncommon_str_i[l][none_index] = sub_uncommon_str if len(sub_uncommon_str) > 1 else sub_uncommon_str[0] # add the uncommon string to the new sequence list
+                    else : uncommon_str_i[l].append(sub_uncommon_str if len(sub_uncommon_str) > 1 else sub_uncommon_str[0])
                     sub_uncommon_str = [] # reset the sequence list
                     tracker_str1 = j - 1 # reset the tracker to the first uncommon string of the new sequence
                     sub_uncommon_str.append(sentences[l][j - 1]) # add the uncommon string to the new sequence list
 
                 j -= 1 # move to the previous column
+                common[index - 1] = "#"
+                index -= 1
             # if the length of the substring from the previous row is greater, add the uncommon character to uncommon_str2 list and move to the previous row
             else:
                 if tracker_str2 == -1: # if the tracker is -1, it means that the substring is the first one
@@ -128,7 +134,7 @@ def common_and_uncommon_extraction(sentences):
                         uncommon_str_i[0].append(sub_uncommon if len(sub_uncommon) > 1 else sub_uncommon[0])
                     else: # else it means that we are dealing with the common sentence 
                         if '#' not in sub_uncommon: # if the sequence doesn't contain the # character, it means it is a new sequence so we add it to the final list directly
-                            sub_uncommon.reverse()
+                            #sub_uncommon.reverse()
                             # we add the uncommon substring to all the uncommon parts of all the previous strings
                             for k in range(l):
                                 sub_uncommon_str_temp[k].append(sub_uncommon if len(sub_uncommon) > 1 else sub_uncommon[0])
@@ -159,11 +165,12 @@ def common_and_uncommon_extraction(sentences):
                     sub_uncommon = [] # reset the sequence list
                     tracker_str2 = i - 1 # reset the tracker to the first uncommon string of the new sequence
                     sub_uncommon.append(temp_sentence[i - 1]) # add the uncommon string to the new sequence list
+                    uncommon_str_i[l].append("")
 
                 common[index - 1] = "#" # add the # character to the common substring to indicate that an uncommon substring is there
                 index -= 1 # move to the previous row
                 i  -= 1 # move to the next string
-
+        
         if l == 1: # if the index point to the second string, it means we are dealing with the first string 
             if len(sub_uncommon) > 0: # if the length of the substring is greater than 0, it means that there is an uncommon substring left
                 sub_uncommon.reverse()
@@ -194,27 +201,75 @@ def common_and_uncommon_extraction(sentences):
                                     sub_uncommon_copy[ind] = uncommon_str_i[k][len(uncommon_str_i[k]) - 1]
                                 uwu += 1
                         
-                        sub_uncommon_copy = remove_all(sub_uncommon_copy, "#") # we remove all the # characters that are left
+                        
+                        if type(uncommon_str_i[k][len(uncommon_str_i[k]) - 1][0]) == list : sub_uncommon_copy = remove_all(sub_uncommon_copy, "#") # we remove all the # characters that are left
                         sub_uncommon_str_temp[k].append(sub_uncommon_copy) # we add the updated uncommon substring to the final list
             # we add the uncommon substring to all the uncommon parts of all the previous strings
             for k in range(l):
+                checking = shrink(" ".join(common)).split("#")
+                nu = len(checking) - 1
+                if temp_sentence[0] == "#":
+                    nu += 1
+                if len(sub_uncommon_str_temp[k]) < nu:
+                    for q in range(0, len(uncommon_str_i[k]) - len(sub_uncommon_str_temp[k])):
+                        sub_uncommon_str_temp[k].insert(0, uncommon_str_i[k][q])
                 uncommon_str_i[k] = sub_uncommon_str_temp[k]
+        
+        if i != 0:
+            temp_i = i
+            sub_uncommon_str2 = [] # reset the sequence list
+            while i > 0:
+                sub_uncommon_str2.append(temp_sentence[i - 1])
+                i -= 1
+            sub_uncommon_str2.reverse()
+            # add the sequence to the final list
+            for k in range(l):
+                if temp_i < len(temp_sentence):
+                    if temp_sentence[temp_i] == "#":
+                        f_unc = uncommon_str_i[k][len(uncommon_str_i[k]) - 1]
+                        uncommon_str_i[k].remove(f_unc)
+                        sub_uncommon_str2.extend(f_unc)
+                uncommon_str_i[k].append(sub_uncommon_str2 if len(sub_uncommon_str2) > 1 else sub_uncommon_str2[0])
+                uncommon_str_i[k] = remove_all(uncommon_str_i[k], "#")
+            if common[0] != "#" and len(shrink(" ".join(common)).split("#")) < len(uncommon_str_i[0]):
+                common.insert(0, "#")
 
         # we add the uncommon substring left to the current string
         if len(sub_uncommon_str) > 0:
             sub_uncommon_str.reverse()
-            uncommon_str_i[l].append(sub_uncommon_str if len(sub_uncommon_str) > 1 else sub_uncommon_str[0])
-        
+            none_index = get_last(uncommon_str_i[l], "")
+            if none_index != -1:
+                uncommon_str_i[l][none_index] = sub_uncommon_str if len(sub_uncommon_str) > 1 else sub_uncommon_str[0] # add the uncommon string to the new sequence list
+            else : uncommon_str_i[l].append(sub_uncommon_str if len(sub_uncommon_str) > 1 else sub_uncommon_str[0])
+            if len(uncommon_str_i[l]) < len(uncommon_str_i[l - 1]):
+                uncommon_str_i[l].append("")
+
         if j != 0:
             sub_uncommon_str = [] # reset the sequence list
+            while len(uncommon_str_i[l]) + 1 > len(uncommon_str_i[l - 1]) and "" in uncommon_str_i[l]:
+                uncommon_str_i[l].remove("")
             while j > 0:
                 sub_uncommon_str.append(sentences[l][j - 1])
                 j -= 1
             sub_uncommon_str.reverse()
             # add the sequence to the final list
             uncommon_str_i[l].append(sub_uncommon_str if len(sub_uncommon_str) > 1 else sub_uncommon_str[0])
+            if common[0] != "#" and len(shrink(" ".join(common)).split("#")) < len(uncommon_str_i[0]):
+                common.insert(0, "#")
 
         temp_sentence = remove_all(common.copy(), "") # we update the common sentence
+
+        for rt in range(0, l):
+            while len(uncommon_str_i[l]) != len(uncommon_str_i[rt]):
+                if len(uncommon_str_i[l]) < len(uncommon_str_i[rt]):
+                    uncommon_str_i[l].append("")
+                else:
+                    uncommon_str_i[rt].append("")
+
+        if len(uncommon_str_i[l]) != len(shrink(" ".join(common)).split("#")) - 1:
+            for rt in range(0, l+1):
+                if len(uncommon_str_i[rt]) < len(shrink(" ".join(common)).split("#")) - 1:
+                    uncommon_str_i[rt].append("")
 
         # N-gram distribution on the uncommon parts
         uncommon_str_i[0:l+1] = ngram_distribution(uncommon_str_i[0:l+1], shrink(" ".join(temp_sentence)))
