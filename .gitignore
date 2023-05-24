@@ -151,7 +151,17 @@ Notebooks/Deep Learning similarity/Classifiction Siamese Manhattan/logs_gru/
 Notebooks/Deep Learning similarity/Classifiction Siamese Manhattan/logs_lstm/
 Notebooks/Deep Learning similarity/Classifiction Siamese Manhattan/logs_lstm1d/
 Notebooks/Deep Learning similarity/Classifiction Siamese Manhattan/models n logs/
-Notebooks/Deep Learning similarity/Classifiction Siamese Manhattan/models/
+
+Notebooks/Deep Learning similarity/Classifiction Siamese Manhattan/models/*.h5
+Notebooks/Deep Learning similarity/Fine Tuning/*.txt
+Notebooks/Deep Learning similarity/Fine Tuning/*.h5
+Notebooks/Deep Learning similarity/Fine Tuning/*.index
+Notebooks/Deep Learning similarity/Fine Tuning/checkpoint
+Notebooks/Metrics/MLM/MLM/*.xlsx
+Notebooks/Metrics/*.zip
+Notebooks/Metrics/*.xlsx
+
+
 
 /text_combining_api/AdvancedGenius1/__pycache__
 /text_combining_api/AdvancedGenius1/classes/__pycache__
