@@ -1,0 +1,184 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Lato', sans-serif;
+    color: #385074;
+    overflow-x: hidden;
+  }
+
+h1 {
+  padding-top: 50px;
+  font-size: 3rem; /* Use rem units for responsive font size */
+  font-weight:700;
+  font-family: 'Lato', sans-serif;
+}
+
+.typewriter {
+  overflow: hidden; /* Ensures the content is not revealed until the animation */
+  border-right: .15em solid orange; /* The typewriter cursor */
+  white-space: nowrap; /* Keeps the content on a single line */
+  margin: 0 auto; /* Gives that scrolling effect as the typing happens */
+  letter-spacing: .15em; /* Adjust as needed */
+  animation: typing 10s steps(40, end) infinite, /* Add infinite to loop the typing animation */
+            blink-caret .75s step-end infinite;
+}
+
+@keyframes typing {
+  from { width: 0 }
+  to { width: 90% }
+}
+
+/* The typewriter cursor effect */
+@keyframes blink-caret {
+  from, to { border-color: transparent }
+  50% { border-color: orange; }
+}
+
+  
+  
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(145deg, #e6e6e6, #ffffff);
+  }
+  
+  .logos {
+    display: flex;
+    justify-content: center;
+    width: 110%;
+    padding: 3%;
+  }
+  
+  img {
+    width: auto;
+    height: 80px;
+  }
+  
+  .block0 {
+    margin-top: 20px;
+  }
+  
+  .block1 {
+    margin-top: 20px;
+  }
+  
+  .blocks {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 2%;
+  }
+
+/* Define a keyframe animation for heart pulse */
+@keyframes heart-pulse {
+    0% {
+      transform: scale(1);
+    }
+    25% {
+      transform: scale(1.2);
+    }
+    50% {
+      transform: scale(1);
+    }
+    75% {
+      transform: scale(1.2);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  
+  /* Apply the animation to your elements */
+  .block2,
+  .block3,
+  .block5 {
+    /* Set the animation name, duration, iteration count, and direction */
+    animation: heart-pulse 20s infinite alternate;
+  }
+  
+  /* Use animation-delay to stagger the animation for different elements */
+  .block2 {
+    animation-delay: 1s;
+  }
+  
+  .block3 {
+    animation-delay: 2s;
+  }
+  
+  .block5 {
+    animation-delay: 3s;
+  }
+  
+
+
+
+  
+  .block2,
+  .block3,
+  .block5 {
+    width: 300px;
+    height: auto;
+    margin: 10px;
+    padding: 20px;
+    border-radius: 20px;
+    background-color: #f5f5f5;
+    box-shadow: 8px 8px 16px rgba(0, 0, 0, 0.1),
+                -8px -8px 16px rgba(255, 255, 255, 0.7);
+    transition: box-shadow 0.5s ease-in-out;
+    font-weight: lighter;
+    font-size: small;
+
+  }
+
+  a{
+    text-decoration: none;
+  }
+  
+  .block2:hover,
+  .block3:hover,
+  .block5:hover {
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.1),
+                -4px -4px 8px rgba(255, 255, 255, 0.7);
+  }
+  
+  .block4 {
+    margin-top: 20px;
+    font-weight: 600;
+    font-size: x-large;
+    color: #ff8a00;
+    padding: 1%;
+  }
+  
+  .blocks {
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+    margin-top: 20px;
+  }
+  
+  .button {
+    margin-top: 20px;
+    padding: 20px 100px;
+    border-radius: 30px;
+    background: linear-gradient(135deg, #fba31f, #eeaa22);
+    color: white;
+    border: none;
+    cursor: pointer;
+    box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.1),
+                -10px -10px 20px rgba(255, 255, 255, 0.5);
+    font-weight: bold;
+    font-size: large;
+    transition: box-shadow 0.5s ease-in-out;
+  }
+  
+  .button:hover {
+    background: linear-gradient(135deg, #e6e6e6, #f5f5f5);
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.1),
+                -4px -4px 8px rgba(255, 255, 255, 0.7);
+    color: #385074;
+    transition: box-shadow 0.5s ease-in-out;
+  }
+  
+ 
