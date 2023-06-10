@@ -2,9 +2,8 @@ import gradio as gr
 
 visible = 0
 
-def combine(text):
-    text = " ".join(text)
-    return text
+def combine(texts):
+    return " ".join(texts)
 
 def show_fn(text3, text4, text5, text6, text7, text8, text9, text10):
     global visible
@@ -239,6 +238,8 @@ def clear_fn(text1, text2, text3, text4, text5, text6, text7, text8, text9, text
 
 
 with gr.Blocks() as demo:
+
+    gr.Markdown("<center><h1>Text Combining Test Platform</h1></center> <center><h2>End of the Year Project</h2></center>")
 
     with gr.Row():
         with gr.Column(scale=1):
