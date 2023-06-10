@@ -1,9 +1,28 @@
 import gradio as gr
 
+from combining import text_combining
+
+import spacy
+import numpy as np
+
+import transformers
+from transformers import pipeline
+from transformers import logging
+logging.set_verbosity_error()
+
+nlp = spacy.load("en_core_web_md")
+fill_mask = pipeline("fill-mask", model="distilbert-base-uncased")
+
 visible = 0
 
 def combine(texts):
-    return " ".join(texts)
+    sentences = []
+    for t in texts:
+        if t != "":
+            sentences.append([t])
+    sentences = np.array(sentences)
+
+    return text_combining(sentences, nlp, fill_mask)
 
 def show_fn(text3, text4, text5, text6, text7, text8, text9, text10):
     global visible
