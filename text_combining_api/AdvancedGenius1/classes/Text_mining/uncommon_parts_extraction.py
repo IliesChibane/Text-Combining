@@ -54,6 +54,14 @@ def remove_all(liste, value):
         liste.remove(value)
     return liste
 
+# get last occurence of an element in a list
+def get_last(liste, element):
+    rev_list = liste.copy()
+    rev_list.reverse()
+    if element in rev_list:
+        index = rev_list.index(element)
+        return len(liste) - index - 1
+    else : return -1
 
 def common_and_uncommon_extraction(sentences):
     lens = [len(s) for s in sentences]
