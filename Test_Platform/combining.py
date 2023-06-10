@@ -14,9 +14,6 @@ logging.set_verbosity_error()
 import warnings
 warnings.filterwarnings('ignore')
 
-nlp = spacy.load("en_core_web_md")
-fill_mask = pipeline("fill-mask", model="distilbert-base-uncased")
-
 # Remove punctuation
 def preprocess(sentences, n):
     new_sentences = []
@@ -470,7 +467,7 @@ def similarity_analysis(masked_sentence, final_uncommon_str, nlp, fill_mask):
     
     return masked_sentence
 
-def text_combining(texts):
+def text_combining(texts, nlp, fill_mask):
     masked_sentence, uncommon_words = text_mining_algorithm(texts)
 
     combined_sentence = similarity_analysis(masked_sentence, flatten(uncommon_words), nlp, fill_mask)
@@ -478,9 +475,10 @@ def text_combining(texts):
     return combined_sentence
 
 if __name__ == "__main__":
-    
+    nlp = spacy.load("en_core_web_md")
+    fill_mask = pipeline("fill-mask", model="distilbert-base-uncased")
     sentence1 = "I love to pay my video games in my free time, especially retro video games."
     sentence2 = "I love to play oreo games in my free thyme, especially retro video games."
     sentence3 = "Ay live to slay video vames in my free time, especially utro video games."
     sentences = np.array([[sentence1], [sentence2], [sentence3]])
-    print(text_combining(sentences))
+    print(text_combining(sentences, nlp, fill_mask))
