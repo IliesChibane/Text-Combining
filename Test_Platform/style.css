@@ -26,7 +26,7 @@ h1 {
 
 @keyframes typing {
   from { width: 0 }
-  to { width: 90% }
+  to { width: 100% }
 }
 
 /* The typewriter cursor effect */
@@ -41,10 +41,11 @@ h1 {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     height: 100vh;
     background: linear-gradient(145deg, #e6e6e6, #ffffff);
   }
-  
+
   .logos {
     display: flex;
     justify-content: center;
@@ -59,6 +60,7 @@ h1 {
   
   .block0 {
     margin-top: 20px;
+    width: 90%;
   }
   
   .block1 {
@@ -180,5 +182,30 @@ h1 {
     color: #385074;
     transition: box-shadow 0.5s ease-in-out;
   }
+  @media only screen and (max-width: 600px) {
+    h1.typewriter {
+      font-size: 1.5rem;
+    }
+    .block1{
+      font-size: 1rem;
+    }
+  }
   
+  @media only screen and (min-width: 600px) and (max-width: 768px) {
+    h1.typewriter {
+      font-size: 2rem;
+    }
+    .block1{
+      font-size: 1.5rem;
+    }
+  }
+  
+  @media only screen and (min-width: 768px) {
+    h1.typewriter {
+      font-size: 3rem;
+    }
+    .block1{
+      font-size: 2rem;
+    }
+  }
  
