@@ -444,7 +444,7 @@ def similarity_analysis(masked_sentence, final_uncommon_str, nlp, fill_mask):
         # MLM with BERT
         pred = fill_mask(masked_sentence)
         # Similarity between the masked words and the uncommon words with word embeddings
-        nlp = spacy.load("en_core_web_md")  
+        #nlp = spacy.load("en_core_web_md")  
         if type(pred[0]) == list:
             df1 = pd.DataFrame(pred[0])
         else:
